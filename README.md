@@ -1,2 +1,2 @@
 # Deep-Learning-Specialisation
-Coursera Andrew ng codes
+Coursera Andrew ng Course
