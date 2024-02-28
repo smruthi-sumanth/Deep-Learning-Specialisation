@@ -1,0 +1,91 @@
+During the history
+of deep learning, many researchers including some very
+well-known researchers, sometimes proposed
+optimization algorithms and show they work well
+in a few problems. But those optimization
+algorithms subsequently were
+shown not to really generalize that well to the wide range of neural networks you might
+want to train. Over time, I think the deep learning community
+actually developed some amount of skepticism about new optimization
+algorithms. A lot of people felt that gradient descent with
+momentum really works well, was difficult to propose
+things that work much better. RMSprop and the Adam
+optimization algorithm, which we'll talk
+about in this video, is one of those rare algorithms
+that has really stood up, and has been shown
+to work well across a wide range of deep
+learning architectures. This one of the algorithms
+that I wouldn't hesitate to recommend you try, because many people have
+tried it and seeing it work well on many problems. The Adam optimization
+algorithm is basically taking
+momentum and RMSprop, and putting them together. Let's see how that works. To implement Adam, you
+initialize V_dw equals 0, S_dw equals 0, and similarly
+V_db, S_db equals 0. Then on iteration t, you would compute
+the derivatives, compute dw, db using
+current mini-batch. Usually, you do this with
+mini-batch gradient descent, and then you do the momentum exponentially
+weighted average. V_dw equals Beta, but
+now I'm going to call this Beta_1 to distinguish
+it from the hyperparameter, Beta_2 we'll use for the
+RMSprop portion of this. This is exactly what we had
+when we're implementing momentum except they
+have now called the hyperparameter Beta
+_1 instead of Beta, and similarly you
+have V_db as follows, plus 1 minus Beta_1 times db, and then you do the RMSprop, like update as well. Now you have a different
+hyperparameter, Beta_2, plus 1, minus
+Beta_2 dw squared. Again, the squaring there, is element-wise squaring
+of your derivatives, dw. Then S_db is equal to this, plus 1 minus Beta_2, times db. This is the momentum-like update with hyperparameter Beta_1, and this is the
+RMSprop-like update with hyperparameter Beta_2. In the typical
+implementation of Adam, you do implement
+bias correction. You're going to
+have V corrected, corrected means after bias
+correction, dw equals V_dw, divided by 1 minus Beta_1 ^t, if you've done t
+elevations, and similarly, V_db corrected equals V_db
+divided by 1 minus Beta_1^t, and then similarly you implement this bias correction on S
+as well, so there's S_dw, divided by 1 minus Beta_2^t, and S_ db corrected equals S_db divided by 1
+minus Beta_2^t. Finally, you perform the update. W gets updated as W
+minus Alpha times. If we're just
+implementing momentum, you'd use V_dw, or
+maybe V_dw corrected. But now we add in the
+RMSprop portion of this, so we're also going to divide by square root of S_dw corrected, plus Epsilon, and similarly, b gets updated as
+a similar formula. V_db corrected divided by square root S corrected,
+db plus Epsilon. These algorithm
+combines the effect of gradient descent with momentum together with gradient
+descent with RMSprop. This is commonly used learning algorithm
+that's proven to be very effective for many
+different neural networks of a very wide variety
+of architectures. This algorithm has a
+number of hyperparameters. The learning rate hyperparameter Alpha is still important, and usually needs to be tuned, so you just have to try a range of values
+and see what works. We did a default choice
+for Beta _1 is 0.9, so this is the weighted
+average of dw. This is the momentum-like term. The hyperparameter for Beta_2, the authors of the
+Adam paper inventors the Adam algorithm
+recommend 0.999. Again, this is computing the moving weighted
+average of dw squared as was db squared. The choice of Epsilon
+doesn't matter very much, but the authors of the Adam
+paper recommend a 10^minus 8, but this parameter, you
+really don't need to set it, and it doesn't affect
+performance much at all. But when implementing Adam, what people usually do is
+just use a default values of Beta_1 and Beta
+_2, as was Epsilon. I don't think anyone ever
+really tuned Epsilon, and then try a range of values of Alpha to
+see what works best. You can also tune
+Beta_1 and Beta_2, but is not done that often among the practitioners I know. Where does the term
+Adam come from? Adam stands for adaptive
+moment estimation, so Beta_1 is computing the
+mean of the derivatives. This is called the first moment, and Beta_2 is used to compute exponentially weighted
+average of the squares, and that's called
+the second moment. That gives rise to the name
+adaptive moment estimation. But everyone just calls it the Adam optimization algorithm. By the way, one of my long-term friends and collaborators is
+called Adam Coates. Far as I know, this algorithm doesn't have anything
+to do with him, except for the fact that I
+think he uses it sometimes, but sometimes I get
+asked that question. Just in case you're wondering. That's it for the Adam
+optimization algorithm. With it, I think
+you really train your neural networks
+much more quickly. But before we wrap
+up for this week, let's keep talking about
+hyperparameter tuning, as well as gain some more
+intuitions about what the optimization problem for
+neural networks looks like. In the next video, we'll talk
+about learning rate decay.

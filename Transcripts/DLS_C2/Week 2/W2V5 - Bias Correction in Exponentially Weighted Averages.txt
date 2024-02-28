@@ -1,0 +1,53 @@
+You've learned how to implement exponentially weighted averages. There's one technical detail
+called bias correction that can make your computation of these averages more accurate. Let's see how that works. In the previous video, you saw this figure
+for Beta equals 0.9, this figure for a
+Beta equals 0.98. But it turns out that if you implement the formula
+as written here, you won't actually get the green curve when
+Beta equals 0.98, you actually get the
+purple curve here. You notice that the purple
+curve starts off really low. Let's see how to fix that. When implementing
+a moving average, you initialize it
+with V_0 equals 0, and then V_1 is equal to
+0.98 V_0 plus 0.02 Theta 1. But V_0 is equal to 0, so that term just goes away. So V_1 is just 0.02
+times Theta 1. That's why if the first
+day's temperature is, say, 40 degrees Fahrenheit, then V_1 will be 0.02 times 40, which is 0.8, so you get a
+much lower value down here. That's not a very good estimate of the first day's temperature. V_2 will be 0.98 times V_1
+plus 0.02 times Theta 2. If you plug in V_1, which is this down here, and multiply it out, then you find that V_2
+is actually equal to 0.98 times 0.02
+times Theta 1 plus 0.02 times Theta 2 and that's 0.0196 Theta 1
+plus 0.02 Theta 2. Assuming Theta 1 and Theta
+2 are positive numbers. When you compute this, V_2 will be much less
+than Theta 1 or Theta 2, so V_2 isn't a
+very good estimate of the first two days
+temperature of the year. It turns out that
+there's a way to modify this estimate that
+makes it much better, that makes it more accurate, especially during this initial
+phase of your estimate. Instead of taking
+V_t, take V_t divided by 1 minus Beta to
+the power of t, where t is the current
+day that you're on. Let's take a concrete example. When t is equal to 2, 1 minus Beta to the power of
+t is 1 minus 0.98 squared. It turns out that is 0.0396. Your estimate of the
+temperature on day 2 becomes V_2 divided by 0.0396, and this is going to be 0.0196 times Theta 1 plus 0.02 Theta 2. You notice that these two things act as denominator, 0.0396. This becomes a weighted
+average of Theta 1 and Theta 2 and this
+removes this bias. You notice that as
+t becomes large, Beta to the t will approach 0, which is why when
+t is large enough, the bias correction makes
+almost no difference. This is why when t is large, the purple line and the green
+line pretty much overlap. But during this initial
+phase of learning, when you're still warming
+up your estimates, bias correction can help you obtain a better estimate
+of the temperature. This is bias correction
+that helps you go from the purple line
+to the green line. In machine learning, for
+most implementations of the exponentially
+weighted average, people don't often
+bother to implement bias corrections because
+most people would rather just weigh
+that initial period and have a slightly more biased assessment and then
+go from there. But we are concerned about the bias during
+this initial phase, while your exponentially
+weighted moving average is warming up, then bias correction can help you get a better
+estimate early on. With that, you now know how to implement exponentially
+weighted moving averages. Let's go on and
+use this to build some better optimization
+algorithms.
