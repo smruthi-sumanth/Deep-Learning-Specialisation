@@ -1,2 +1,2 @@
 # Deep-Learning-Specialisation
-Coursera Andrew ng Course
+Deep Learning Course by Andrew ng! 
